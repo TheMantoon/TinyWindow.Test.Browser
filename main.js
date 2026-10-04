@@ -894,6 +894,7 @@ canvas.addEventListener('wheel', (e) => {
 
 // Touch Support
 canvas.addEventListener('touchstart', (e) => {
+    e.preventDefault();
     if (e.touches.length > 0) {
         const touch = e.touches[0];
         const { x, y } = getCanvasCoords(touch.clientX, touch.clientY);
@@ -934,7 +935,9 @@ Object.assign(virtualInput.style, {
     margin: '0',
     padding: '0',
     zIndex: '-1',
-    fontSize: '16px' // 16px prevents iOS Safari from automatically zooming the page
+    fontSize: '16px', // 16px prevents iOS Safari from automatically zooming the page
+    outline: 'none',
+    webkitTapHighlightColor: 'transparent'
 });
 document.body.appendChild(virtualInput);
 
@@ -1031,6 +1034,7 @@ virtualInput.addEventListener('input', (e) => {
 });
 
 canvas.addEventListener('touchend', (e) => {
+    e.preventDefault();
     if (e.changedTouches.length > 0) {
         const touch = e.changedTouches[0];
         const { x, y } = getCanvasCoords(touch.clientX, touch.clientY);
@@ -1042,7 +1046,7 @@ canvas.addEventListener('touchend', (e) => {
             virtualInput.focus({ preventScroll: true });
         } catch { }
     }
-});
+}, { passive: false });
 
 canvas.addEventListener('touchcancel', () => {
     bridge?.OnTouchCancel();
