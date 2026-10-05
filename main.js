@@ -1,38 +1,6 @@
 import { dotnet } from './_framework/dotnet.js';
 
 const canvas = document.getElementById('canvas');
-const loadingOverlay = document.getElementById('loading-overlay');
-const webgpuWarning = document.getElementById('webgpu-warning');
-const fpsCounter = document.getElementById('fps-counter');
-const debugOverlay = document.getElementById('debug-overlay');
-const debugLog = document.getElementById('debug-log');
-
-function logToScreen(type, ...args) {
-    const text = args.map(a => typeof a === 'object' ? (a?.stack || a?.message || JSON.stringify(a)) : String(a)).join(' ');
-    if (debugLog && debugOverlay) {
-        const item = document.createElement('div');
-        item.style.color = type === 'error' ? '#f87171' : type === 'warn' ? '#fbbf24' : '#94a3b8';
-        item.textContent = `[${type.toUpperCase()}] ${text}`;
-        debugLog.appendChild(item);
-        debugOverlay.style.display = 'block';
-        debugOverlay.scrollTop = debugOverlay.scrollHeight;
-    }
-}
-
-window.addEventListener('error', (e) => logToScreen('error', e.message, `(${e.filename}:${e.lineno})`));
-window.addEventListener('unhandledrejection', (e) => logToScreen('error', 'Unhandled Promise:', e.reason));
-
-const originalConsoleError = console.error;
-console.error = function(...args) {
-    originalConsoleError.apply(console, args);
-    logToScreen('error', ...args);
-};
-
-const originalConsoleWarn = console.warn;
-console.warn = function(...args) {
-    originalConsoleWarn.apply(console, args);
-    logToScreen('warn', ...args);
-};
 
 // ==========================================
 // WebGPU Shaders (WGSL)
@@ -278,8 +246,6 @@ async function checkShader(module, name) {
 async function initWebGpu(width, height) {
     if (!navigator.gpu) {
         console.error("WebGPU is not supported on this browser.");
-        if (loadingOverlay) loadingOverlay.style.display = 'none';
-        if (webgpuWarning) webgpuWarning.style.display = 'block';
         return false;
     }
 
@@ -287,8 +253,6 @@ async function initWebGpu(width, height) {
         adapter = await navigator.gpu.requestAdapter({ powerPreference: 'high-performance' });
         if (!adapter) {
             console.error("Failed to request WebGPU adapter.");
-            if (loadingOverlay) loadingOverlay.style.display = 'none';
-            if (webgpuWarning) webgpuWarning.style.display = 'block';
             return false;
         }
 
@@ -494,17 +458,10 @@ async function initWebGpu(width, height) {
 
         updateProjection(width, height);
 
-        if (loadingOverlay) {
-            loadingOverlay.style.opacity = '0';
-            setTimeout(() => { loadingOverlay.style.display = 'none'; }, 400);
-        }
-
         console.log(`[WebGPU] Initialized successfully. Resolution: ${width}x${height}`);
         return true;
     } catch (err) {
         console.error("WebGPU setup failed:", err);
-        if (loadingOverlay) loadingOverlay.style.display = 'none';
-        if (webgpuWarning) webgpuWarning.style.display = 'block';
         return false;
     }
 }
@@ -1090,24 +1047,12 @@ window.addEventListener('keypress', (e) => {
 // ==========================================
 
 let lastTime = 0;
-let frameCount = 0;
-let lastFpsTime = performance.now();
-
 let initialResizeDone = false;
 
 function animate(time) {
     if (lastTime === 0) lastTime = time;
     const dt = Math.min((time - lastTime) / 1000.0, 0.1);
     lastTime = time;
-
-    frameCount++;
-    const now = performance.now();
-    if (now - lastFpsTime >= 1000) {
-        const fps = Math.round((frameCount * 1000) / (now - lastFpsTime));
-        if (fpsCounter) fpsCounter.textContent = `${fps} FPS`;
-        frameCount = 0;
-        lastFpsTime = now;
-    }
 
     if (bridge) {
         if (!initialResizeDone) {

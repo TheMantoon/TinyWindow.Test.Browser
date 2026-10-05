@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "TinyWindow.Test.Browser",
   "resources": {
-    "hash": "sha256-GXJ9tXnGgDucecf5kB99NZuDnJu5aBs8lyD68KHorZQ=",
+    "hash": "sha256-oEVO+6k2FDo4BRTgG9e64+E2mhgHKLhQrr/kL9KK7iE=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-dexsp+9ih2C28zVhNnPXUbkz2QCq7lHpkyDcmaLl7NQ="
     },
@@ -26,11 +26,11 @@
       "System.Console.wasm": "sha256-qYWvvWaR+2zM94gygMewsMmgmmfaKu82N1NQgENblGI=",
       "System.Private.CoreLib.wasm": "sha256-/FCCd/BGMQ89JySMuEKp9oyjs8SQZZpnF4PQPsgqLVs=",
       "System.Runtime.InteropServices.JavaScript.wasm": "sha256-r4Pa5vS1KBNYhEUIm2Xgf37K3vimD5yxfsOzPU3sIBM=",
-      "TinyWindow.Browser.wasm": "sha256-sI1/R+tZuSUgeKEm73p8URql5T++LVHXNwBmLK4zf6w=",
-      "TinyWindow.SilkNET.wasm": "sha256-CBpnWWLI/193GHvooxq00O5vk9VQX9thE435M4MlUE8=",
-      "TinyWindow.Test.Browser.wasm": "sha256-1NjnNKecJRZDDS2ORIdpqvCE4NR73GIhBGm8z++kYUo=",
+      "TinyWindow.Browser.wasm": "sha256-cTBXHBUhBCpSWPu5yS3DYl9Tx5xYL9la2zmqggrjh00=",
+      "TinyWindow.SilkNET.wasm": "sha256-Ofw7TjvsgkY1RKtA4YgfVIy+BBHuE8YeDJmvtLoKHF4=",
+      "TinyWindow.Test.Browser.wasm": "sha256-8U5uiZtTNEqTStPjUWajVe8Uq4q4LAYW9g/8vxSo844=",
       "TinyWindow.Test.wasm": "sha256-+EhPfpm61edEhPhuLVhZ7TNxCQ1NUdKegnvcXtmtXgk=",
-      "TinyWindow.wasm": "sha256-BcMzu/9D2ibiMQBT+OdyGRnrsgH0dKuB+mHRZ8uQIrU="
+      "TinyWindow.wasm": "sha256-dFe6x9oMPdm2N69DwO7PtkLuUBqchQXYsOLqHv6gEmA="
     }
   },
   "cacheBootResources": true,
